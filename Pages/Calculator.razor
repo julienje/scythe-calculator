@@ -1,0 +1,88 @@
+@page "/Calculator"
+<PageTitle>Scythe Calculator</PageTitle>
+
+<p>
+    <label>
+        Popularity: <input @bind="_currentPlayer.Popularity" />
+    </label>
+</p>
+<p>
+    <label>
+        Stars: <input @bind="_currentPlayer.Stars" />
+    </label>
+</p>
+<p>
+    <label>
+        Territories (without factory): <input @bind="_currentPlayer.Territories" />
+    </label>
+</p>
+<p>
+    <label>
+        Factory controlled?: <input type="checkbox" @bind="_currentPlayer.ControlFactory" />
+    </label>
+</p>
+<p>
+    <label>
+        Resources: <input @bind="_currentPlayer.Resources" />
+    </label>
+</p>
+<p>
+    <label>
+        Scoring Tile: <input @bind="_currentPlayer.ScoringTile" />
+    </label>
+</p>
+<p>
+    <label>
+        Coins: <input @bind="_currentPlayer.Coins" />
+    </label>
+</p>
+<p>Score: @_currentPlayer.Score </p>
+
+@code {
+    private Player _currentPlayer = new Player();
+
+    public class Player
+    {
+        public int Popularity { get; set; } = 0;
+        public int Stars { get; set; } = 0;
+        public int Territories { get; set; } = 0;
+        public bool ControlFactory { get; set; } = false;
+        public int Resources { get; set; } = 0;
+        public int ScoringTile { get; set; } = 0;
+        public int Coins { get; set; } = 0;
+
+        public int Score =>
+            ComputeScore();
+
+        private int ComputeScore()
+        {
+            int PopularityChange()
+            {
+                return (Popularity > 12 ? 2 : (Popularity > 7 ? 1 : 0));
+            }
+
+            int StarsFactor()
+            {
+                return 3 + PopularityChange();
+            }
+
+            int TerritoriesFactor()
+            {
+                return 2 + PopularityChange();
+            }
+
+            int RessourcesFactor()
+            {
+                return 1 + PopularityChange();
+            }
+
+
+            return Stars * StarsFactor()
+                   + (Territories + (ControlFactory ? 3 : 0)) * TerritoriesFactor()
+                   + (Resources / 2) * RessourcesFactor()
+                   + ScoringTile
+                   + Coins;
+        }
+    }
+
+}
