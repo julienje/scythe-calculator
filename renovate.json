@@ -1,0 +1,20 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:best-practices"
+  ],
+  "packageRules": [
+    {
+      "matchSourceUrls": [
+        "https://github.com/dotnet/aspnetcore",
+        "https://github.com/dotnet/efcore",
+        "https://github.com/dotnet/extensions",
+        "https://github.com/dotnet/maui",
+        "https://github.com/dotnet/runtime",
+        "https://github.com/dotnet/sdk",
+        "https://github.com/dotnet/fsharp"
+      ],
+      "groupName": "Extended dotnet"
+    }
+  ]
+}
